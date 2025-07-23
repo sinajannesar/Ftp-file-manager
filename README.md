@@ -1,80 +1,87 @@
-# FTP File Manager
+FTP File Manager with Next.js and React
+This project is a modern and complete File Manager component for FTP servers, built with Next.js (App Router), React, and TypeScript. The file manager is displayed as a modal (popup) and provides full functionality for managing files and folders.
 
-A modern, web-based FTP file manager built with Next.js 15, React 19, and TypeScript. This application provides a beautiful and intuitive interface for managing files on FTP servers with drag-and-drop functionality.
+<!-- Place a screenshot of your project here -->
 
-## Features
+✨ Features
+Full CRUD Operations: Create, read, update, and delete files and folders.
 
-- 🚀 **Modern UI/UX** - Clean, responsive interface with Tailwind CSS
-- 📁 **Full File Management** - Create, rename, delete folders and files
-- 📤 **Drag & Drop Upload** - Easy file uploading with visual feedback
-- 🔄 **Real-time Operations** - Instant feedback for all file operations
-- 🛡️ **Permission-based Actions** - Configurable user permissions
-- 📱 **Mobile Responsive** - Works seamlessly on all devices
+Modern UI: Designed with Tailwind CSS for a beautiful and responsive interface.
 
-## Tech Stack
+Drag & Drop: Easily upload files by dragging and dropping them into the file manager window.
 
-- **Frontend**: Next.js 15, React 19, TypeScript
-- **Styling**: Tailwind CSS 4
-- **Icons**: React Icons
-- **FTP Client**: basic-ftp
+Lazy Loading: The file manager component is only loaded when the user needs it, improving initial page load speed.
 
-## FileZilla Server Setup
+Clean Architecture: Uses React Context API for state management, preventing prop drilling.
 
-### Step 1: Download and Install
-1. Download FileZilla Server from the official website
-2. Install and configure as Windows service
+Easy Navigation: Features breadcrumbs for convenient navigation between folders.
 
-### Step 2: Configure Server
-1. **Create User**:
-   - Username: `Myuser`
-   - Password: `12341234`
+Access Control: Ability to limit allowed operations for the user (e.g., read and upload only).
 
-2. **Set Permissions**:
-   - Add shared folder
-   - Enable: Read, Write, Delete, Create directories
-   - Set as home directory
+🛠️ Tech Stack
+Next.js 13+ (App Router)
 
-3. **Enable TLS**:
-   - Enable "FTP over TLS support"
-   - Allow explicit FTP over TLS
+React 18
 
-## Installation
+TypeScript
 
-### 1. Clone Repository
-```bash
-git clone <repository-url>
+Tailwind CSS
+
+basic-ftp: A server-side library for communicating with FTP.
+
+react-icons: For beautiful icons.
+
+⚙️ Prerequisites and Installation
+To run this project, you will need the following:
+
+1. Software Dependencies
+Node.js: Version 18.17 or higher.
+
+Git: For version control.
+
+An active FTP Server: You need an FTP server to connect to. For local development and testing, we have used FileZilla Server.
+
+Download FileZilla Server: You can download this free software from its official website and install it on Windows.
+
+Setup: After installation, create a user with a password and assign a folder from your computer as its home directory. Grant the necessary permissions (read, write, delete) to the user.
+
+2. Project Setup Steps
+Clone the repository:
+
+git clone https://github.com/your-username/ftp-file-manager.git
 cd ftp-file-manager
+
+Install dependencies:
+
 npm install
-```
 
-### 2. Environment Setup
-Create `.env.local`:
-```env
+Create the environment variables file:
+Create a file named .env.local in the root of your project and enter your FTP server details.
+
+# .env.local
+
+# Your FTP Server credentials
+# For local testing with FileZilla Server:
 FTP_HOST="127.0.0.1"
-FTP_USER="Myuser"
-FTP_PASSWORD="12341234"
-```
+FTP_USER="your_ftp_user"      # The username you created in FileZilla Server
+FTP_PASSWORD="your_ftp_password" # The password you set
 
-### 3. Run Application
-```bash
+Run the development server:
+
 npm run dev
-```
 
-Visit [http://localhost:3000](http://localhost:3000)
+Your project is now available at http://localhost:3000.
 
-## Usage
+⚠️ Important Security Note
+In the lib/ftp-client.ts file, the rejectUnauthorized: false option is used to connect to a local FTP server (which does not have a valid SSL certificate).
 
-- **Navigate**: Double-click folders to enter
-- **Upload**: Drag and drop files
-- **Create Folder**: Click "New Folder" button
-- **Rename/Delete**: Use action buttons on hover
+Never use this option in a production environment to connect to a real server on the internet, as it compromises the security of your connection.
 
-## Permission Modes
+📂 Project Structure
+/app/api/ftp/: Contains all server-side API Routes for communicating with the FTP server.
 
-```typescript
-// Read-only mode
-['read', 'upload']
+/components/: Contains reusable UI components.
 
-// Full management mode
-['read', 'upload', 'delete', 'rename', 'create']
-```
+/contexts/: Contains the React Context for managing the file manager's global state.
+
+/hooks/: Contains the useFtpManager custom hook to separate logic from the UI.
